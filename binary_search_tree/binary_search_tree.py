@@ -73,3 +73,24 @@ class BinarySearchTree:
     def __str__(self):
         return str(self.value)
     print("running")
+
+
+# class BinaryTreeNode:
+#     def __init__(self, value):
+#         self.value = value;
+#         self.left = None;
+#         self.right = None;
+#     def __repr__(self):
+#         return str([self.value, self.left, self.right])
+
+# def gen_bin(input_list):
+#     if len(input_list) == 0:
+#         return None
+#     center = len(input_list) // 2
+#     node = BinaryTreeNode(input_list[center])
+#     node.left = gen_bin(input_list[:center])
+#     node.right = gen_bin(input_list[center+1:])
+#     return node
+
+
+# print(gen_bin([1, 2, 3, 4, 5, 6, 7]))
