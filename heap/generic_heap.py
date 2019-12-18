@@ -1,22 +1,55 @@
 class Heap:
-  def __init__(self, comparator):
-    self.storage = []
-    self.comparator = comparator
+    def __init__(self, comparator=lambda x, y: x > y):
+        self.storage = []
+        self.comparator = comparator
 
-  def insert(self, value):
-    pass
+    def insert(self, value):
+        # first, append to the storage we have
+        self.storage.append(value)
+        # then, we need to siftUp, or bubble up the value
+        self._bubble_up(len(self.storage) - 1, self.storage)
 
-  def delete(self):
-    pass
+    def delete(self):
+        self.swap(0, len(self.storage) - 1, self.storage)
+        valueToDelete = self.storage.pop()
+        self._sift_down(0, len(self.storage) - 1, self.storage)
 
-  def get_priority(self):
-    pass
+        return valueToDelete
 
-  def get_size(self):
-    pass
+    def get_max(self):
+        return self.storage[0]
 
-  def _bubble_up(self, index):
-    pass
+    def get_size(self):
+        return len(self.storage)
 
-  def _sift_down(self, index):
-    pass
+    def _bubble_up(self, index, storage):
+        parentIdx = (index - 1) // 2
+        # while we are not at top ofheap
+        while index > 0 and self.comparator(storage[index], storage[parentIdx]):
+            self.swap(index, parentIdx, storage)
+            index = parentIdx
+            parentIdx = (index - 1) // 2
+
+    def _sift_down(self, index, endIdx, storage):
+        # modified sift down to take in a currentIdx and endIdx
+
+        leftChildIdx = index * 2 + 1
+        # keep going until we run out of childnodes to swap
+        while leftChildIdx <= endIdx:
+            rightChildIdx = index * 2 + 2 if index * 2 + 2 <= endIdx else -1
+            if rightChildIdx is not -1 and self.comparator(storage[rightChildIdx], storage[leftChildIdx]):
+                # swap those indexes
+                idxToSwap = rightChildIdx
+            else:
+                idxToSwap = leftChildIdx
+            if storage[idxToSwap] > storage[index]:
+                self.swap(index, idxToSwap, storage)
+                index = idxToSwap
+                leftChildIdx = index * 2 + 1
+            else:
+                break
+
+    def swap(self, i, j, storage):
+        # added a swap helper func
+
+        storage[i], storage[j] = storage[j], storage[i]
