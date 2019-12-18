@@ -74,10 +74,12 @@ class DoublyLinkedList:
             return None
         if self.head is self.tail:
             value_removed = self.head.value
+            del self.head
             self.head = None
+            del self.tail
             self.tail = None
             self.length -= 1
-        
+
         else:
             value_removed = self.head.value
             self.head.next.prev = None
@@ -106,13 +108,15 @@ class DoublyLinkedList:
 
         if self.head is self.tail:
             value_removed = self.tail.value
+            del self.head
             self.head = None
+            del self.tail
             self.tail = None
             self.length -= 1
         else:
             value_removed = self.tail.value
             self.tail = self.tail.prev
-            self.tail.next = None
+            del self.tail.next
             self.length -= 1
         return value_removed
 
@@ -120,7 +124,7 @@ class DoublyLinkedList:
         current_node = node
         if node is self.head:
             print("node is already at front")
-            
+
         elif node is self.tail:
             self.remove_from_tail()
             self.add_to_head(current_node.value)
@@ -128,13 +132,12 @@ class DoublyLinkedList:
             # get rid of it
             self.delete(node)
             self.add_to_head(current_node.value)
-        
 
     def move_to_end(self, node):
         current_node = node
         if node is self.tail:
             print("node is already at end, dumbo")
-            
+
         elif node is self.head:
             # we need special functions for heads and tails
             self.remove_from_head()
@@ -143,8 +146,6 @@ class DoublyLinkedList:
             # get rid of it
             self.delete(node)
             self.add_to_tail(current_node.value)
-        
-
 
     def delete(self, node):
         if self.head is node:
