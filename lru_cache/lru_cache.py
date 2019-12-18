@@ -39,4 +39,18 @@ class LRUCache:
     """
 
     def set(self, key, value):
-        pass
+        # check the length to see if at limit; if so, delete last
+
+        # make everything explicit, expose the state
+        if self.size == self.limit:
+            # for this particular tuple, the first index is the key, the second is the "value"
+            del self.storage[self.order.head.value[0]]
+            self.order.remove_from_head()
+            self.size -= 1
+        # check and see if key is in the cache
+        # if it is in the chache, move to the front and update the value
+        # if not, add to the front of the cache
+        # Defining tail as most recent, and head as oldest
+        self.order.add_to_tail((key, value))
+        self.storage[key] = self.order.tail
+        self.size += 1
